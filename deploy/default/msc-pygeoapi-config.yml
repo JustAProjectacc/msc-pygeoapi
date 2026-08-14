@@ -3820,6 +3820,46 @@ resources:
                   name: NetCDF
                   mimetype: application/x-netcdf
 
+    weather:riops:
+        type: collection
+        title:
+            en: Regional Ice-Ocean Prediction System
+            fr: Système régional de prévision océan-glace
+        description:
+            en: The Regional Ice Ocean Prediction System (RIOPS) provides ice and ocean forecasts up to 84 hours, four times per day on a 1/12° resolution grid (3-8 km). RIOPS is initialized using analyses from the Global Ice-Ocean Prediction System (GIOPS). Atmospheric fluxes up to 84 hours forecasts are calculated using fields from a component of the Global Deterministic Prediction System (GDPS) at 10km horizontal resolution. RIOPS is based on the NEMO-CICE ice-ocean model and produces regional sea ice and ocean analyses and 2 day forecasts daily based at [00, 06, 12, 18] UTC. RIOPS includes a 3DVar ice concentration analysis (assimilating sattelite remote sensing and Canadian Ice Service ice charts) while the large scales of the ocean analysis are constrained by spectrally nudging the temperature and salinity fields to those of the CCMEP Global Ice Ocean Prediction System (which itself includes a full multivariate assimilation system that combines satellite observations with in situ observations).
+            fr: Le Système régional de prévision océan-glace (SRPOG) fournit quatre fois par jour des prévisions de l'océan et de la glace jusqu'à 84 heures sur une grille à 1/12° de résolution (de 3 à 8 km). Le SRPOG est initialisé avec l'utilisation d'analyses tirées du Système global de prévision océan-glace (SGPOG). Les calculs des flux atmosphériques des prévisions jusqu'à 84 heures utilisent des champs tirés d'une composante du Système global de prévision déterministe (SGPD) à 10km de résolution horizontale. Le SRPOG utilise le modèle océan-glace NEMO-CICE et fournit des analyses et prévisions globales de 2 jours de l'océan et de la glace marine, quotidiennement à partir de [00, 06, 12, 18] UTC. Le SRPOG comprend une analyse 3DVar de la concentration de la glace (assimilant des observations satellitaires et des cartes de glace du service canadien des glaces) alors que les larges échelles de l'analyse océanique sont contraintes en rappelant spectralement les champs de température et de salinité vers ceux du Système global de prévision océan-glace du CCMEP (qui lui inclut un système d'assimilation multivarié qui ingère des observations satellitaires ainsi que des observations in-situ).
+        keywords:
+            en: [Sea ice-ocean forecast, Prediction, Regional]
+            fr: [Prévision océan-glace de mer, Prévision, Régional]
+        extents:
+            spatial:
+                bbox: [-180, 28.896, 180, 90]
+                crs: http://www.opengis.net/def/crs/OGC/1.3/CRS84
+        links:
+            - type: text/html
+              rel: canonical
+              title:
+                en: Data and Products of the Regional Ice Ocean Prediction System (RIOPS)
+                fr: Données et Produits du Système régional de prévision océan-glace (SRPOG)
+              href:
+                en: https://eccc-msc.github.io/open-data/msc-data/nwp_riops/readme_riops_en/
+                fr: https://eccc-msc.github.io/open-data/msc-data/nwp_riops/readme_riops_fr/
+              hreflang:
+                en: en-CA
+                fr: fr-CA
+        providers:
+            - type: coverage
+              name: msc_pygeoapi.provider.riops_xarray.RIOPSProvider
+              data: /data/geomet/feeds/hpfx/model_riops/netcdf/forecast/polar_stereographic/2d/*/*/*_MSC_RIOPS_*_*_PS5km_P*.nc
+              x_field: xc
+              y_field: yc
+              time_field: time
+              options:
+                fields: ['iiceconc', 'iicedivergence', 'iicepressure', 'iiceshear', 'iicestrength', 'iicesurftemp', 'iicevol', 'isnowvol', 'itmecrty', 'itzocrtx', 'sokaraml', 'somixhgt', 'sossheig', 'vomecrty', 'vosaline', 'votemper', 'vozocrtx']
+              format:
+                  name: NetCDF
+                  mimetype: application/x-netcdf
+
     climate:cangrd:historical:annual:trend:
         type: collection
         title:
