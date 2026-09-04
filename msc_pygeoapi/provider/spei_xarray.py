@@ -137,7 +137,7 @@ class SPEIProvider(ClimateProvider):
                 if len(scenario) > 1:
                     msg = 'multiple scenario are not supported'
                     LOGGER.error(msg)
-                    raise ProviderQueryError(msg)
+                    raise ProviderQueryError(msg, user_msg=msg)
                 elif scenario[0] not in ['RCP2.6', 'hist']:
                     scenario_value = scenario[0].replace('RCP', '')
                     self.data = self.data.replace('2.6', scenario_value)
@@ -150,8 +150,18 @@ class SPEIProvider(ClimateProvider):
         if 'percentile' in subsets:
             percentile = subsets['percentile']
 
+            converage_properties = self._coverage_properties
+            percentile_properties = converage_properties['uad']['percentile']
+
             try:
-                if percentile != [50]:
+                if (
+                    percentile[0] not in
+                    percentile_properties['interval'][0]
+                ):
+                    err = 'Invalid percentile value.'
+                    LOGGER.error(err)
+                    raise ProviderQueryError(err, user_msg=err)
+                elif percentile != [50]:
                     pctl = str(percentile[0])
                     self.data = self.data.replace('pctl50', f'pctl{pctl}')
 
