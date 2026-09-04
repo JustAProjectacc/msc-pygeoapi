@@ -136,6 +136,13 @@ class CanDCSU6Provider(ClimateProvider):
                     msg = 'multiple scenario are not supported'
                     LOGGER.error(msg)
                     raise ProviderQueryError(msg)
+                elif (
+                    scenario[0] not in
+                    self._coverage_properties['uad']['scenario']['interval'][0]
+                ):
+                    err = 'Invalid scenario value.'
+                    LOGGER.error(err)
+                    raise ProviderQueryError(err, user_msg=err)
                 elif scenario[0] != 'SSP126':
                     scenario_value = scenario[0].replace('SSP', '')
                     self.data = self.data.replace('126', scenario_value)
@@ -149,9 +156,16 @@ class CanDCSU6Provider(ClimateProvider):
 
         if 'percentile' in subsets:
             percentile = subsets['percentile']
-
+            prop = self._coverage_properties
             try:
-                if percentile != [50]:
+                if (
+                    percentile[0] not in
+                    prop['uad']['percentile']['interval'][0]
+                ):
+                    err = 'Invalid percentile value.'
+                    LOGGER.error(err)
+                    raise ProviderQueryError(err, user_msg=err)
+                elif percentile != [50]:
                     pctl = str(percentile[0])
                     self.data = self.data.replace('Pct50', f'Pct{pctl}')
 
@@ -169,6 +183,13 @@ class CanDCSU6Provider(ClimateProvider):
                     msg = 'multiple 30 years average are not supported'
                     LOGGER.error(msg)
                     raise ProviderQueryError(msg)
+                elif (
+                    years_avg[0] not in
+                    self._coverage_properties['uad']['P30Y-Avg']['interval'][0]
+                ):
+                    err = 'Invalid 30 years average value.'
+                    LOGGER.error(err)
+                    raise ProviderQueryError(err, user_msg=err)
                 elif years_avg[0] != '2021-2050':
                     self.data = self.data.replace('2021-2050', years_avg[0])
             except Exception as err:
